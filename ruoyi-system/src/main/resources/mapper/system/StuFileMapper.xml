@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.StuFileMapper">
+    
+    <resultMap type="StuFile" id="StuFileResult">
+        <result property="fid"    column="fid"    />
+        <result property="uid"    column="uid"    />
+        <result property="nation"    column="nation"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="political"    column="political"    />
+        <result property="address"    column="address"    />
+        <result property="idNum"    column="id_num"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="imgUrl"    column="img_url"    />
+        <result property="cid"    column="cid"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectStuFileVo">
+        select fid, uid, nation, start_time, political, address, id_num, birthday, img_url, cid, dept_id, create_by, create_time, update_by, update_time, remark from stu_file
+    </sql>
+
+    <select id="selectStuFileList" parameterType="StuFile" resultMap="StuFileResult">
+        <include refid="selectStuFileVo"/>
+        <where>  
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="nation != null  and nation != ''"> and nation = #{nation}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="political != null  and political != ''"> and political = #{political}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="idNum != null  and idNum != ''"> and id_num = #{idNum}</if>
+            <if test="birthday != null "> and birthday = #{birthday}</if>
+            <if test="imgUrl != null  and imgUrl != ''"> and img_url = #{imgUrl}</if>
+            <if test="cid != null "> and cid = #{cid}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectStuFileByFid" parameterType="Long" resultMap="StuFileResult">
+        <include refid="selectStuFileVo"/>
+        where fid = #{fid}
+    </select>
+        
+    <insert id="insertStuFile" parameterType="StuFile">
+        insert into stu_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fid != null">fid,</if>
+            <if test="uid != null">uid,</if>
+            <if test="nation != null">nation,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="political != null">political,</if>
+            <if test="address != null">address,</if>
+            <if test="idNum != null">id_num,</if>
+            <if test="birthday != null">birthday,</if>
+            <if test="imgUrl != null">img_url,</if>
+            <if test="cid != null">cid,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fid != null">#{fid},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="nation != null">#{nation},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="political != null">#{political},</if>
+            <if test="address != null">#{address},</if>
+            <if test="idNum != null">#{idNum},</if>
+            <if test="birthday != null">#{birthday},</if>
+            <if test="imgUrl != null">#{imgUrl},</if>
+            <if test="cid != null">#{cid},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStuFile" parameterType="StuFile">
+        update stu_file
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="nation != null">nation = #{nation},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="political != null">political = #{political},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="idNum != null">id_num = #{idNum},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="imgUrl != null">img_url = #{imgUrl},</if>
+            <if test="cid != null">cid = #{cid},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where fid = #{fid}
+    </update>
+
+    <delete id="deleteStuFileByFid" parameterType="Long">
+        delete from stu_file where fid = #{fid}
+    </delete>
+
+    <delete id="deleteStuFileByFids" parameterType="String">
+        delete from stu_file where fid in 
+        <foreach item="fid" collection="array" open="(" separator="," close=")">
+            #{fid}
+        </foreach>
+    </delete>
+
+</mapper>

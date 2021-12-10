@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改班级')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-class-edit" th:object="${stuClass}">
+            <input name="cid" th:field="*{cid}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">班级名称：</label>
+                <div class="col-sm-8">
+                    <input name="className" th:field="*{className}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">年级(例：2018 2019)：</label>
+                <div class="col-sm-8">
+                    <input name="grade" th:field="*{grade}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">年制：</label>
+                <div class="col-sm-8">
+                    <input name="year" th:field="*{year}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">专业：</label>
+                <div class="col-sm-8">
+                    <input name="speciality" th:field="*{speciality}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">班主任(用户表id)：</label>
+                <div class="col-sm-8">
+                    <input name="banjo" th:field="*{banjo}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">人数：</label>
+                <div class="col-sm-8">
+                    <input name="number" th:field="*{number}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">说明：</label>
+                <div class="col-sm-8">
+                    <input name="remark" th:field="*{remark}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "model/class";
+        $("#form-class-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-class-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

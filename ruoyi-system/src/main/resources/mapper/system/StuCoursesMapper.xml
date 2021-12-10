@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.StuCoursesMapper">
+    
+    <resultMap type="StuCourses" id="StuCoursesResult">
+        <result property="cid"    column="cid"    />
+        <result property="cname"    column="cname"    />
+        <result property="creditPoint"    column="credit_point"    />
+        <result property="uid"    column="uid"    />
+        <result property="workId"    column="work_id"    />
+        <result property="period"    column="period"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectStuCoursesVo">
+        select cid, cname, credit_point, uid, work_id, period, create_by, create_time, update_by, update_time, remark from stu_courses
+    </sql>
+
+    <select id="selectStuCoursesList" parameterType="StuCourses" resultMap="StuCoursesResult">
+        <include refid="selectStuCoursesVo"/>
+        <where>  
+            <if test="cid != null "> and cid = #{cid}</if>
+            <if test="cname != null  and cname != ''"> and cname like concat('%', #{cname}, '%')</if>
+            <if test="creditPoint != null "> and credit_point = #{creditPoint}</if>
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="workId != null  and workId != ''"> and work_id = #{workId}</if>
+            <if test="period != null "> and period = #{period}</if>
+        </where>
+    </select>
+    
+    <select id="selectStuCoursesByCid" parameterType="Long" resultMap="StuCoursesResult">
+        <include refid="selectStuCoursesVo"/>
+        where cid = #{cid}
+    </select>
+        
+    <insert id="insertStuCourses" parameterType="StuCourses">
+        insert into stu_courses
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cid != null">cid,</if>
+            <if test="cname != null">cname,</if>
+            <if test="creditPoint != null">credit_point,</if>
+            <if test="uid != null">uid,</if>
+            <if test="workId != null">work_id,</if>
+            <if test="period != null">period,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cid != null">#{cid},</if>
+            <if test="cname != null">#{cname},</if>
+            <if test="creditPoint != null">#{creditPoint},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="workId != null">#{workId},</if>
+            <if test="period != null">#{period},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStuCourses" parameterType="StuCourses">
+        update stu_courses
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cname != null">cname = #{cname},</if>
+            <if test="creditPoint != null">credit_point = #{creditPoint},</if>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="workId != null">work_id = #{workId},</if>
+            <if test="period != null">period = #{period},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where cid = #{cid}
+    </update>
+
+    <delete id="deleteStuCoursesByCid" parameterType="Long">
+        delete from stu_courses where cid = #{cid}
+    </delete>
+
+    <delete id="deleteStuCoursesByCids" parameterType="String">
+        delete from stu_courses where cid in 
+        <foreach item="cid" collection="array" open="(" separator="," close=")">
+            #{cid}
+        </foreach>
+    </delete>
+
+</mapper>
